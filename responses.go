@@ -106,12 +106,3 @@ func StatusNotImplemented(err error) Response {
 		Error:  err,
 	}
 }
-
-// Validate error
-func (r Response) Validate() error {
-	if r.Status >= http.StatusBadRequest && r.Error != nil {
-		return r.Error
-	}
-
-	return nil
-}

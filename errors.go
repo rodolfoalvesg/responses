@@ -1,5 +1,7 @@
 package responses
 
+import "fmt"
+
 var (
 	ErrorBadRequest          = BadRequestError{Title: "Bad Request", Description: "The request could not be understood by the server due to malformed syntax."}
 	ErrorUnauthorized        = UnauthorizedError{Title: "Unauthorized", Description: "The request requires user authentication."}
@@ -43,4 +45,13 @@ type ConflictError struct {
 	Type        string `json:"type" default:"conflict"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
+}
+
+type ValidationError struct {
+	Param string
+	Err   error
+}
+
+func (e ValidationError) Error() string {
+	return fmt.Sprintf("%s: %s", e.Param, e.Err.Error())
 }
