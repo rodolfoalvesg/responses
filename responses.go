@@ -10,21 +10,6 @@ type Response struct {
 	header  http.Header `json:"-"`
 }
 
-// Status codes
-const (
-	OK                  = 200
-	Created             = 201
-	Accepted            = 202
-	NoContent           = 204
-	BadRequest          = 400
-	Unauthorized        = 401
-	Forbidden           = 403
-	NotFound            = 404
-	Conflict            = 409
-	InternalServerError = 500
-	NotImplemented      = 501
-)
-
 // Return Header
 func (r Response) Header() http.Header {
 	return r.header
@@ -33,7 +18,7 @@ func (r Response) Header() http.Header {
 // Response status OK
 func StatusOK(payload interface{}) Response {
 	return Response{
-		Status:  OK,
+		Status:  http.StatusOK,
 		Payload: payload,
 	}
 }
@@ -41,7 +26,7 @@ func StatusOK(payload interface{}) Response {
 // Response status Created
 func StatusCreated(payload interface{}) Response {
 	return Response{
-		Status:  Created,
+		Status:  http.StatusCreated,
 		Payload: payload,
 	}
 }
@@ -49,7 +34,7 @@ func StatusCreated(payload interface{}) Response {
 // Response status Accepted
 func StatusAccepted(payload interface{}) Response {
 	return Response{
-		Status:  Accepted,
+		Status:  http.StatusAccepted,
 		Payload: payload,
 	}
 }
@@ -57,59 +42,59 @@ func StatusAccepted(payload interface{}) Response {
 // Response status NoContent
 func StatusNoContent() Response {
 	return Response{
-		Status: NoContent,
+		Status: http.StatusNoContent,
 	}
 }
 
 // Response status BadRequest
-func StatusBadRequest(payload interface{}, err error) Response {
+func StatusBadRequest(err error) Response {
 	return Response{
-		Status:  BadRequest,
+		Status:  http.StatusBadRequest,
 		Error:   err,
-		Payload: payload,
+		Payload: ErrorBadRequest,
 	}
 }
 
 // Response status Unauthorized
-func StatusUnauthorized(payload interface{}, err error) Response {
+func StatusUnauthorized(err error) Response {
 	return Response{
-		Status:  Unauthorized,
+		Status:  http.StatusUnauthorized,
 		Error:   err,
-		Payload: payload,
+		Payload: ErrorUnauthorized,
 	}
 }
 
 // Response status Forbidden
-func StatusForbidden(payload interface{}, err error) Response {
+func StatusForbidden(err error) Response {
 	return Response{
-		Status:  Forbidden,
+		Status:  http.StatusForbidden,
 		Error:   err,
-		Payload: payload,
+		Payload: ErrorForbidden,
 	}
 }
 
 // Response status NotFound
-func StatusNotFound(payload interface{}, err error) Response {
+func StatusNotFound(err error) Response {
 	return Response{
-		Status:  NotFound,
+		Status:  http.StatusNotFound,
 		Error:   err,
-		Payload: payload,
+		Payload: ErrorNotFound,
 	}
 }
 
 // Response status Conflict
 func StatusConflict(payload interface{}, err error) Response {
 	return Response{
-		Status:  Conflict,
+		Status:  http.StatusConflict,
 		Error:   err,
-		Payload: payload,
+		Payload: ErrorConflict,
 	}
 }
 
 // Response status InternalServerError
 func StatusInternalServerError(err error) Response {
 	return Response{
-		Status: InternalServerError,
+		Status: http.StatusInternalServerError,
 		Error:  err,
 	}
 }
@@ -117,14 +102,14 @@ func StatusInternalServerError(err error) Response {
 // Response status NotImplemented
 func StatusNotImplemented(err error) Response {
 	return Response{
-		Status: NotImplemented,
+		Status: http.StatusNotImplemented,
 		Error:  err,
 	}
 }
 
 // Validate error
 func (r Response) Validate() error {
-	if r.Status >= BadRequest && r.Error != nil {
+	if r.Status >= http.StatusBadRequest && r.Error != nil {
 		return r.Error
 	}
 

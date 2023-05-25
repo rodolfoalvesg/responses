@@ -85,11 +85,11 @@ func TestStatusBadRequest(t *testing.T) {
 
 	want := Response{
 		Status:  http.StatusBadRequest,
-		Payload: "Bad Request",
+		Payload: ErrorBadRequest,
 		Error:   errBadRequest,
 	}
 
-	got := StatusBadRequest("Bad Request", errBadRequest)
+	got := StatusBadRequest(errBadRequest)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
@@ -103,11 +103,11 @@ func TestStatusUnauthorized(t *testing.T) {
 
 	want := Response{
 		Status:  http.StatusUnauthorized,
-		Payload: "Unauthorized",
+		Payload: ErrorUnauthorized,
 		Error:   errUnauthorized,
 	}
 
-	got := StatusUnauthorized("Unauthorized", errUnauthorized)
+	got := StatusUnauthorized(errUnauthorized)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
@@ -121,11 +121,11 @@ func TestStatusForbidden(t *testing.T) {
 
 	want := Response{
 		Status:  http.StatusForbidden,
-		Payload: "Forbidden",
+		Payload: ErrorForbidden,
 		Error:   errForbidden,
 	}
 
-	got := StatusForbidden("Forbidden", errForbidden)
+	got := StatusForbidden(errForbidden)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
@@ -139,11 +139,11 @@ func TestStatusNotFound(t *testing.T) {
 
 	want := Response{
 		Status:  http.StatusNotFound,
-		Payload: "Not Found",
+		Payload: ErrorNotFound,
 		Error:   errNotFound,
 	}
 
-	got := StatusNotFound("Not Found", errNotFound)
+	got := StatusNotFound(errNotFound)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
