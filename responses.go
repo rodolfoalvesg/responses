@@ -4,45 +4,44 @@ import "net/http"
 
 // crete a struct to hold the response
 type Response struct {
-	Status  int         `json:"status"`
-	Payload interface{} `json:"data"`
-	Error   error       `json:"error"`
-	header  http.Header `json:"-"`
-}
-
-// Return Header
-func (r Response) Header() http.Header {
-	return r.header
+	Status  int
+	Payload interface{}
+	Error   error
+	Headers map[string]string
 }
 
 // Response status OK
-func StatusOK(payload interface{}) Response {
+func StatusOK(payload interface{}, headers map[string]string) Response {
 	return Response{
 		Status:  http.StatusOK,
 		Payload: payload,
+		Headers: headers,
 	}
 }
 
 // Response status Created
-func StatusCreated(payload interface{}) Response {
+func StatusCreated(payload interface{}, headers map[string]string) Response {
 	return Response{
 		Status:  http.StatusCreated,
 		Payload: payload,
+		Headers: headers,
 	}
 }
 
 // Response status Accepted
-func StatusAccepted(payload interface{}) Response {
+func StatusAccepted(payload interface{}, header map[string]string) Response {
 	return Response{
 		Status:  http.StatusAccepted,
 		Payload: payload,
+		Headers: header,
 	}
 }
 
 // Response status NoContent
-func StatusNoContent() Response {
+func StatusNoContent(header map[string]string) Response {
 	return Response{
-		Status: http.StatusNoContent,
+		Status:  http.StatusNoContent,
+		Headers: header,
 	}
 }
 

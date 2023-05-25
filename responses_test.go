@@ -9,30 +9,16 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestHeaderResponse(t *testing.T) {
-	t.Parallel()
-
-	want := Response{
-		Status: http.StatusOK,
-		header: http.Header{
-			"Content-Type": []string{"application/json"},
-		},
-	}
-
-	got := want.Header()
-
-	require.Equal(t, want.header, got)
-}
-
 func TestStatusOK(t *testing.T) {
 	t.Parallel()
 
 	want := Response{
 		Status:  http.StatusOK,
 		Payload: "OK",
+		Headers: map[string]string{"Content-Type": "application/json"},
 	}
 
-	got := StatusOK("OK")
+	got := StatusOK("OK", want.Headers)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
@@ -44,9 +30,10 @@ func TestStatusCreated(t *testing.T) {
 	want := Response{
 		Status:  http.StatusCreated,
 		Payload: "Created",
+		Headers: map[string]string{"Content-Type": "application/json"},
 	}
 
-	got := StatusCreated("Created")
+	got := StatusCreated("Created", want.Headers)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
@@ -58,9 +45,10 @@ func TestStatusAccepted(t *testing.T) {
 	want := Response{
 		Status:  http.StatusAccepted,
 		Payload: "Accepted",
+		Headers: map[string]string{"Content-Type": "application/json"},
 	}
 
-	got := StatusAccepted("Accepted")
+	got := StatusAccepted("Accepted", want.Headers)
 
 	require.Equal(t, want.Status, got.Status)
 	assert.Equal(t, want.Payload, got.Payload)
@@ -71,9 +59,12 @@ func TestStatusNoContent(t *testing.T) {
 
 	want := Response{
 		Status: http.StatusNoContent,
+		Headers: map[string]string{
+			"Content-Type": "application/json",
+		},
 	}
 
-	got := StatusNoContent()
+	got := StatusNoContent(want.Headers)
 
 	require.Equal(t, want.Status, got.Status)
 }
